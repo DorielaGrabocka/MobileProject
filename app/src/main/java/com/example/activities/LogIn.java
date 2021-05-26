@@ -27,7 +27,7 @@ public class LogIn extends AppCompatActivity {
 
     /**Action handler for login button*/
     public void loginClicked(View v){
-        //try{
+        try{
             String id = id_tv.getText().toString();
             String password = password_tv.getText().toString();
             //Toast.makeText(this, id+" "+password, Toast.LENGTH_SHORT).show();
@@ -41,10 +41,10 @@ public class LogIn extends AppCompatActivity {
             else{
                 Toast.makeText(this, "Wrong credentials! Try again!", Toast.LENGTH_SHORT).show();
             }
-        //}catch (Exception e){
-//            Toast.makeText(this, "Please fill the ID and the password!"+e.printStackTrace(), Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+           Toast.makeText(this, "Please fill the ID and the password!", Toast.LENGTH_SHORT).show();
 
-        //}
+        }
 
     }
 }

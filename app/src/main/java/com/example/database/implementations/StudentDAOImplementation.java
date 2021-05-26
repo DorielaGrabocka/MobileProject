@@ -136,4 +136,8 @@ public class StudentDAOImplementation implements StudentDAO {
     public Student getTheUser() {
         return theUser;
     }
+
+    public void setTheUser(Student theUser) {
+        this.theUser = theUser;
+    }
 }

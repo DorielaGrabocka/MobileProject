@@ -62,7 +62,8 @@ public class StudentCourse implements Serializable {
         this.courseId = courseId;
     }
 
-    /**Method to get the quality points from letter grade*/
+    /**Method to get the quality points from letter grade
+     * @return the corresponding quality points*/
     public double getQualityPointsFromLetterGrade(){
         double qualityPoints=0.0;
         switch (grade){
