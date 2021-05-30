@@ -38,7 +38,17 @@ public class StudentDAOImplementation implements StudentDAO {
 
     @Override
     public List<Course> getNextCourses() {
-        return null;
+        String query = CoursesDAOImplementation.getBASIC_QUERYCourses()
+                +" where id not in " +
+                "(select sc.CourseID from student s join studentcourse sc on s.id=sc.StudentID where s.id=?)\n" +
+                "and (Eligibility='All' OR Department=?);";
+        List<Course> listOfEligibleCourses = new ArrayList<>();
+        Cursor cursor = database.getReadableDatabase()
+                .rawQuery(query, new String[]{String.valueOf(theUser.getId()),theUser.getMajor()});
+        while(cursor.moveToNext()){
+            listOfEligibleCourses.add(CoursesDAOImplementation.getCourseFromCursor(cursor));
+        }
+        return listOfEligibleCourses;
     }
 
     @Override
@@ -110,7 +120,7 @@ public class StudentDAOImplementation implements StudentDAO {
             theUser.setListOfNextPossibleCourses(getNextCourses());
             theUser.setCredits();
             theUser.setGpa();
-            return potentialUser;
+            return theUser;
         }
         return null;
     }

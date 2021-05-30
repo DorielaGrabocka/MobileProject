@@ -12,4 +12,6 @@
     <color name="ligher_blue_2">#01adff</color>
     <color name="transparent">#CCFFFFFF</color>
     <color name="violet_light">#b5007e</color>
+    <color name="green">#7CE37C</color>
+    <color name="red">#F44336</color>
 </resources>
