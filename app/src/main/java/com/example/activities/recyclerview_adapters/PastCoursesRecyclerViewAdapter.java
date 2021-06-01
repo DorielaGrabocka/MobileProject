@@ -1,6 +1,7 @@
 package com.example.activities.recyclerview_adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.activities.CoursePage;
 import com.example.activities.R;
 import com.example.models.Course;
 import com.example.models.StudentCourse;
@@ -87,6 +89,8 @@ public class PastCoursesRecyclerViewAdapter extends RecyclerView.Adapter<PastCou
                 public void onClick(View v) {
                     Toast.makeText(context, "Go to Course clicked!", Toast.LENGTH_SHORT).show();
                     //implement it here
+                    Intent coursePageIntent = new Intent(context, CoursePage.class);
+                    //coursePageIntent.putExtra("course", )
                 }
             });
         }

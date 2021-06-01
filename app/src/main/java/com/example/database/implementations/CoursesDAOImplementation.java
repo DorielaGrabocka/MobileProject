@@ -6,9 +6,11 @@ import android.database.Cursor;
 import com.example.database.daofactory.DAOFactory;
 import com.example.database.daofactory.DatabaseHelper;
 import com.example.database.interfaces.CourseDAO;
+import com.example.models.Comment;
 import com.example.models.Course;
 import com.example.models.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoursesDAOImplementation implements CourseDAO {
@@ -21,6 +23,7 @@ public class CoursesDAOImplementation implements CourseDAO {
     public CoursesDAOImplementation(Context context) {
         database = DAOFactory.getDatabaseAccessObject(context);
     }
+
 
     @Override
     public List<Student> getAllStudents(Course c) {
@@ -87,5 +90,26 @@ public class CoursesDAOImplementation implements CourseDAO {
 
     public static String getBASIC_QUERYCourses() {
         return BASIC_QUERY;
+    }
+
+    /**Method to  get all all comments of a course
+     * @param courseId - is the is of the course whose comments we ned to  display
+     * @return a list of comments*/
+    public List<Comment> getAllComments(int courseId){
+        List<Comment> listOfComments = new ArrayList<>();
+        String query = "SELECT studentID, courseID, text FROM comment WHERE courseID=?";
+        Cursor c = database.getReadableDatabase().rawQuery(query, new String[]{String.valueOf(courseId)});
+        while(c.moveToNext()){
+            listOfComments.add(getCommentFromCursor(c));
+        }
+        return listOfComments;
+    }
+
+    private Comment getCommentFromCursor(Cursor c) {
+        Comment comment = new Comment();
+        comment.setStudentId(c.getInt(0));
+        comment.setCourseId(c.getInt(1));
+        comment.setComment(c.getString(2));
+        return comment;
     }
 }
