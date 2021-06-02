@@ -1,6 +1,5 @@
 package com.example.database.daofactory;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,7 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DB_NAME = "data(2).sqlite";
+    private static String DB_NAME = "data(4).sqlite";
     private static String DB_PATH = "";
     private static final int DB_VERSION = 1;
 

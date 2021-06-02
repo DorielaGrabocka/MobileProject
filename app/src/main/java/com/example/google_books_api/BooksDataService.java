@@ -89,7 +89,7 @@ public class BooksDataService {
                         }
                         else{
                             String data = main_object.getString("averageRating");
-                            one_book.setRating(data==null?"NaN": data);
+                            one_book.setRating(data.isEmpty()?"NaN": data);
                         }
 
                         if(!main_object.has("publisher")){

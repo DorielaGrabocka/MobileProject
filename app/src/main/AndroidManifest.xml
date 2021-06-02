@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketUni">
-        <activity android:name=".CoursePage"></activity>
+        <activity android:name=".GradeAnalyticsActivity"></activity>
+        <activity android:name=".CoursePage" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LogIn">
             <intent-filter>

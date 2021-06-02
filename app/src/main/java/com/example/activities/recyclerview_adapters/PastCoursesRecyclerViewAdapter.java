@@ -1,5 +1,6 @@
 package com.example.activities.recyclerview_adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,8 +15,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activities.CoursePage;
+import com.example.activities.MainActivity;
 import com.example.activities.R;
 import com.example.models.Course;
+import com.example.models.Student;
 import com.example.models.StudentCourse;
 
 import java.util.ArrayList;
@@ -26,10 +29,10 @@ public class PastCoursesRecyclerViewAdapter extends RecyclerView.Adapter<PastCou
 
     private List<StudentCourse> pastCourses = new ArrayList<>();
     private Context context;
-
-    public PastCoursesRecyclerViewAdapter(Context context) {
+    private Student theUser;
+    public PastCoursesRecyclerViewAdapter(Context context, Student user) {
         this.context = context;
-
+        theUser = user;
     }
 
     public void setCourses(List<StudentCourse> courses) {
@@ -55,11 +58,16 @@ public class PastCoursesRecyclerViewAdapter extends RecyclerView.Adapter<PastCou
         holder.gpa_tv.setText("Grade: "+ pastCourses.get(position).getQualityPointsFromLetterGrade());
         holder.grade_tv.setText("GPA: "+ pastCourses.get(position).getGrade());
 
-        //missing image
-        /*Glide.with(context)
-                .asBitmap()
-                .load(books.get(position).getImageUrl())
-                .into(holder.image);*/
+        holder.go_to_coursepage_btn.setOnClickListener(v -> {
+//            Toast.makeText(context, "Go to course clicked!", Toast.LENGTH_SHORT).show();
+//            //implement it here
+            Intent coursePageIntent = new Intent(context, CoursePage.class);
+            coursePageIntent.putExtra("course", pastCourses.get(position).getCourse());
+            coursePageIntent.putExtra("user", theUser);
+            coursePageIntent.putExtra("past", true);
+            coursePageIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(coursePageIntent);
+        });
     }
 
     @Override
@@ -83,16 +91,6 @@ public class PastCoursesRecyclerViewAdapter extends RecyclerView.Adapter<PastCou
             grade_tv = itemView.findViewById(R.id.grade_tv);
             parent = itemView.findViewById(R.id.parent);
             go_to_coursepage_btn = itemView.findViewById(R.id.go_to_coursepage_btn);
-
-            go_to_coursepage_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Go to Course clicked!", Toast.LENGTH_SHORT).show();
-                    //implement it here
-                    Intent coursePageIntent = new Intent(context, CoursePage.class);
-                    //coursePageIntent.putExtra("course", )
-                }
-            });
         }
     }
 }

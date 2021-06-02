@@ -48,7 +48,7 @@ public class FutureCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Futur
         holder.title_tv.setText("Title: "+ courses.get(position).getTitle());
         holder.instructor_tv.setText("Instructor: "+ courses.get(position).getInstructor());
         holder.credits_tv.setText("Credits: "+ courses.get(position).getCredits());
-        holder.time_tv.setText("Time: "+ courses.get(position).getTime());
+        holder.time_tv.setText("Time: "+ courses.get(position).getDay()+", "+courses.get(position).getTime());
 
         //missing image
         /*Glide.with(context)

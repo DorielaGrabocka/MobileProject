@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +28,7 @@ public class CoursesFragment extends Fragment {
     private RecyclerView listOfCoursesView;
     private View view;
     private StudentDAOImplementation studentDAO;
-    private  Context context;
+    private Context context;
     private Student theUser;
 
     public CoursesFragment(Context context, Student user) {
@@ -38,17 +37,15 @@ public class CoursesFragment extends Fragment {
     }
 
     private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
-
-
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             if(checkedId==R.id.current_courses_rb){
-                PresentCoursesRecyclerViewAdapter adapter = new PresentCoursesRecyclerViewAdapter(context);
+                PresentCoursesRecyclerViewAdapter adapter = new PresentCoursesRecyclerViewAdapter(context, theUser);
                 adapter.setCourses(studentDAO.getCurrentCourses());
                 listOfCoursesView.setAdapter(adapter);
             }
             else if(checkedId==R.id.past_courses_rb){
-                PastCoursesRecyclerViewAdapter adapter = new PastCoursesRecyclerViewAdapter(context);
+                PastCoursesRecyclerViewAdapter adapter = new PastCoursesRecyclerViewAdapter(context, theUser);
                 adapter.setCourses(studentDAO.getFinishedCourses());
                 listOfCoursesView.setAdapter(adapter);
             }
@@ -61,24 +58,19 @@ public class CoursesFragment extends Fragment {
         }
     };
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_courses, container, false);
-        //context = getApplicationContext();
         studentDAO = new StudentDAOImplementation(context);
-        currentCreditsPgBar = view.findViewById(R.id.current_progressbar);
-        obtainedCreditsPgBar = view.findViewById(R.id.done_progressbar);
-        obtained_credits_tv = view.findViewById(R.id.done_credits_tv);
-        remaining_credits_tv = view.findViewById(R.id.remaining_credits_tv);
-        current_credits_tv = view.findViewById(R.id.current_credits_tv);
-        type_of_courses_rg = view.findViewById(R.id.type_of_courses_radiogroup);
-        listOfCoursesView = view.findViewById(R.id.courses_recycler_view);
-        listOfCoursesView.setHasFixedSize(true);
+        initializeGUIComponents();
         studentDAO.setTheUser(theUser);
-        gpa_tv = view.findViewById(R.id.gpa_tv);
+        fillGUIComponents();
+        type_of_courses_rg.setOnCheckedChangeListener(listener);
+        return view;
+    }
+
+    private void fillGUIComponents() {
         int obtainedCredits = studentDAO.getTheUser().getCredits();
         int currentCredits = studentDAO.getCurrentCourses()
                 .stream()
@@ -91,14 +83,22 @@ public class CoursesFragment extends Fragment {
         obtainedCreditsPgBar.setProgress(obtainedCredits);
         obtained_credits_tv.setText("Obtained Credits: "+ obtainedCredits);
         remaining_credits_tv.setText("Remaining Credits: "+ remainingCredits);
-        gpa_tv.setText("GPA: "+String.format("%.2f",studentDAO.getTheUser().getGpa()));
-        PresentCoursesRecyclerViewAdapter adapter = new PresentCoursesRecyclerViewAdapter(context);
+        gpa_tv.setText("GPA: "+String.format("%.2f", studentDAO.getTheUser().getGpa()));
+        PresentCoursesRecyclerViewAdapter adapter = new PresentCoursesRecyclerViewAdapter(context, theUser);
         adapter.setCourses(studentDAO.getCurrentCourses());
         listOfCoursesView.setAdapter(adapter);
         listOfCoursesView.setLayoutManager(new LinearLayoutManager(context));
+    }
 
-        type_of_courses_rg.setOnCheckedChangeListener(listener);
-
-        return view;
+    private void initializeGUIComponents() {
+        currentCreditsPgBar = view.findViewById(R.id.current_progressbar);
+        obtainedCreditsPgBar = view.findViewById(R.id.done_progressbar);
+        obtained_credits_tv = view.findViewById(R.id.done_credits_tv);
+        remaining_credits_tv = view.findViewById(R.id.remaining_credits_tv);
+        current_credits_tv = view.findViewById(R.id.current_credits_tv);
+        type_of_courses_rg = view.findViewById(R.id.type_of_courses_radiogroup);
+        listOfCoursesView = view.findViewById(R.id.courses_recycler_view);
+        listOfCoursesView.setHasFixedSize(true);
+        gpa_tv = view.findViewById(R.id.gpa_tv);
     }
 }

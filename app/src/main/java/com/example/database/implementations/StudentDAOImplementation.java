@@ -48,6 +48,7 @@ public class StudentDAOImplementation implements StudentDAO {
         while(cursor.moveToNext()){
             listOfEligibleCourses.add(CoursesDAOImplementation.getCourseFromCursor(cursor));
         }
+        cursor.close();
         return listOfEligibleCourses;
     }
 
@@ -65,6 +66,7 @@ public class StudentDAOImplementation implements StudentDAO {
         while (cursor.moveToNext()){
             listOfCourses.add(CoursesDAOImplementation.getCourseFromCursor(cursor));
         }
+        cursor.close();
         return listOfCourses;
     }
 
@@ -93,6 +95,7 @@ public class StudentDAOImplementation implements StudentDAO {
             Student student=getStudentFormCursor(result);
             return  student;
         }
+        result.close();
         return null;
     }
 

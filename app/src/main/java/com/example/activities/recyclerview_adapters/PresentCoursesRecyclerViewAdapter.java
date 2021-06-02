@@ -1,6 +1,7 @@
 package com.example.activities.recyclerview_adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.activities.CoursePage;
+import com.example.activities.GradeAnalyticsActivity;
 import com.example.activities.R;
 import com.example.models.Course;
+import com.example.models.Student;
 import com.example.models.StudentCourse;
 
 import java.util.ArrayList;
@@ -25,10 +29,11 @@ public class PresentCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Pres
 
     private List<Course> currentCourses = new ArrayList<>();
     private Context context;
+    private Student theUser;
 
-    public PresentCoursesRecyclerViewAdapter(Context context) {
+    public PresentCoursesRecyclerViewAdapter(Context context, Student user) {
         this.context = context;
-
+        theUser = user;
     }
 
     public void setCourses(List<Course> courses) {
@@ -53,6 +58,27 @@ public class PresentCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Pres
         holder.time_tv.setText("Time: "+ currentCourses.get(position).getTime());
         holder.venue_tv.setText("Venue: "+ currentCourses.get(position).getVenue());
         holder.grade_tv.setText("GPA: Not Available yet");
+
+        View.OnClickListener listener = v -> {
+            if(v.getId()==R.id.go_to_coursepage_btn){
+                //Toast.makeText(context, "Go to Course page clicked!", Toast.LENGTH_SHORT).show();
+                Intent coursePageIntent = new Intent(context, CoursePage.class);
+                coursePageIntent.putExtra("course", currentCourses.get(position));
+                coursePageIntent.putExtra("user", theUser);
+                coursePageIntent.putExtra("past", false);
+                coursePageIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(coursePageIntent);
+            }
+            else{
+                //Toast.makeText(context, "Grade Analytics clicked!", Toast.LENGTH_SHORT).show();
+                Intent coursePageIntent = new Intent(context, GradeAnalyticsActivity.class);
+                coursePageIntent.putExtra("course", currentCourses.get(position));
+                coursePageIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(coursePageIntent);
+            }
+        };
+        holder.go_to_course_btn.setOnClickListener(listener);
+        holder.grade_analysis_btn.setOnClickListener(listener);
         //missing image
         /*Glide.with(context)
                 .asBitmap()
@@ -71,18 +97,7 @@ public class PresentCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Pres
         private TextView title_tv, instructor_tv, credits_tv, time_tv, grade_tv,venue_tv;
         private Button go_to_course_btn, grade_analysis_btn;
         private ImageView image;
-        private View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v.getId()==R.id.go_to_coursepage_btn){
-                    Toast.makeText(context, "Go to Course page clicked!", Toast.LENGTH_SHORT).show();
-                    //do it here
-                }
-                else{
-                    Toast.makeText(context, "Grade Analytics clicked!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,8 +110,6 @@ public class PresentCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Pres
             parent = itemView.findViewById(R.id.parent);
             go_to_course_btn = itemView.findViewById(R.id.go_to_coursepage_btn);
             grade_analysis_btn = itemView.findViewById(R.id.grade_analytics_btn);
-            go_to_course_btn.setOnClickListener(listener);
-            grade_analysis_btn.setOnClickListener(listener);
             image = itemView.findViewById(R.id.image);
         }
     }

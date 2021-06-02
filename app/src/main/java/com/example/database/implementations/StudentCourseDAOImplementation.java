@@ -16,6 +16,7 @@ public class StudentCourseDAOImplementation {
             "FROM studentcourse ";
     private DatabaseHelper database;
     private CoursesDAOImplementation coursesDAOImplementation;
+
     public StudentCourseDAOImplementation(Context context) {
         this.database = DAOFactory.getDatabaseAccessObject(context);
         coursesDAOImplementation = new CoursesDAOImplementation(context);
@@ -33,6 +34,7 @@ public class StudentCourseDAOImplementation {
         while(cursor.moveToNext()){
             listOfStudentCourses.add(createStudentCourseFormCursor(cursor));
         }
+        cursor.close();
         return listOfStudentCourses;
     }
 

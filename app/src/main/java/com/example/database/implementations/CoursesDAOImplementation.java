@@ -1,7 +1,10 @@
 package com.example.database.implementations;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.database.daofactory.DAOFactory;
 import com.example.database.daofactory.DatabaseHelper;
@@ -52,6 +55,7 @@ public class CoursesDAOImplementation implements CourseDAO {
         if(cursor.moveToFirst() && cursor.getCount()==1){
             return getCourseFromCursor(cursor);
         }
+        cursor.close();
         return null;
     }
 
@@ -92,6 +96,31 @@ public class CoursesDAOImplementation implements CourseDAO {
         return BASIC_QUERY;
     }
 
+    /**Method used to add a comment for a course.
+     * @param comment is the comment to  be added to the database
+     * */
+    public void addCommentAboutCourse(Comment comment){
+        SQLiteDatabase db = database.getWritableDatabase();
+        String query = "INSERT INTO 'comment' ('studentid', 'courseid', 'text') VALUES (?,?,?)";
+        db.execSQL(query, new String[]{String.valueOf(comment.getStudentId()),
+                String.valueOf(comment.getCourseId()),
+                comment.getComment()});
+        db.close();
+    }
+
+    /**Method used to delete a comment from a course
+     * @param comment  is the comment to be deleted
+     * */
+    public void deleteComment(Comment comment){
+        SQLiteDatabase db = database.getWritableDatabase();
+        String query = "DELETE FROM 'comment' WHERE studentID=? AND courseID=? AND text=?;";
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(comment.getStudentId()),
+                String.valueOf(comment.getCourseId()),
+                comment.getComment()});
+        Log.println(Log.INFO, "Database",String.valueOf(c.moveToFirst()));
+        db.close();
+    }
+
     /**Method to  get all all comments of a course
      * @param courseId - is the is of the course whose comments we ned to  display
      * @return a list of comments*/
@@ -102,6 +131,7 @@ public class CoursesDAOImplementation implements CourseDAO {
         while(c.moveToNext()){
             listOfComments.add(getCommentFromCursor(c));
         }
+        c.close();
         return listOfComments;
     }
 

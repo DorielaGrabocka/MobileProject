@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener listener = item -> {
         Fragment selectedFragment = null;
         boolean loggedout=false;
+        StudentDAOImplementation studentDAOImplementation=
+                new StudentDAOImplementation(getApplicationContext());;
+
         switch (item.getItemId()){
             case R.id.home_nav:
                 selectedFragment = new HomeFragment();
@@ -40,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new SearchFragment();
                 break;
             case R.id.logout_nav:
-                StudentDAOImplementation studentDAOImplementation =
-                        new StudentDAOImplementation(getApplicationContext());
                 studentDAOImplementation.setTheUser(null);
                 Intent loginPage =  new Intent(MainActivity.this, LogIn.class);
                 startActivity(loginPage);
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, selectedFragment)
                 .commit();
+        studentDAOImplementation.closeConnection();
         return true;
     };
 
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new HomeFragment())
                 .commit();
+        studentDAO.closeConnection();
     }
 
     public Student getTheUser() {
