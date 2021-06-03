@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.database.implementations.StudentCourseDAOImplementation;
+import com.example.database.implementations.StudentDAOImplementation;
 import com.example.models.Student;
 import com.example.models.StudentCourse;
 
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment {
                     break;
                 case R.id.home_settings_container:
                     gotToIntent = gotToIntent = new Intent(context, SettingsActvity.class);
+                    gotToIntent.putExtra("user", theUser);
                     gotToIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
                 case R.id.home_got_to_UNYT_container:

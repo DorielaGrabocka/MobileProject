@@ -2,6 +2,7 @@ package com.example.database.implementations;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -78,7 +79,13 @@ public class StudentDAOImplementation implements StudentDAO {
 
     @Override
     public void update(Student student) {
-
+        SQLiteDatabase db = database.getWritableDatabase();
+        String query = "UPDATE student SET age=?, email=? WHERE id=?;";
+        String[] arguments = {String.valueOf(student.getAge()),
+                String.valueOf(student.getEmail()),
+                String.valueOf(student.getId())};
+        db.execSQL(query, arguments);
+        db.close();
     }
 
     @Override

@@ -6,13 +6,175 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActvity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/name_of_activity_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Personal Settings Activity"
+        android:text="Personal Settings"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.102" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/name_of_activity_tv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/name_linear_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="Name: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:id="@+id/settings_name_et"
+            android:enabled="false"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/name_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/surname_linear_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Surname: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:text="Surname"
+            android:textColor="@color/black"
+            android:id="@+id/settings_surname_et"
+            android:enabled="false"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/surname_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/email_linear_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="Email: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:id="@+id/settings_email_et"
+            android:enabled="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/email_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/age_linear_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="Age: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="Age"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:id="@+id/settings_age1_et"
+            android:enabled="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/age_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/major_linear_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="Major: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="Major: "
+            android:textColor="@color/black"
+            android:id="@+id/settings_major_et"
+            android:enabled="false"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/major_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/settings_minor_layout">
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="Minor: "
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="Major: "
+            android:textColor="@color/black"
+            android:id="@+id/settings_minor_et"
+            android:enabled="false"/>
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPDATE INFO"
+        android:id="@+id/update_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_minor_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
