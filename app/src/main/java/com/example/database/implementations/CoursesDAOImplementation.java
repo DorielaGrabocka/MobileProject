@@ -60,6 +60,37 @@ public class CoursesDAOImplementation implements CourseDAO {
         return null;
     }
 
+    /**Method to get the list of books based on title
+     * @param title - is the keyword of title
+     * @return the list of books
+     * */
+    public List<Course> findCourseByTitle(String title){
+        String query = BASIC_QUERY+" WHERE lower(title) LIKE '%"+title+"%'";
+        return getCourses(query);
+    }
+
+    /**Method to get the list of books based on title
+     * @param instructor - is the keyword of title
+     * @return the list of books
+     * */
+    public List<Course> findCourseByInstructor(String instructor){
+        String query = BASIC_QUERY+" WHERE lower(instructor) LIKE '%"+instructor+"%'";
+        return getCourses(query);
+    }
+
+    /**Utility method to get courses from a query.
+     * @param query - is the query that will retrive the infromation
+     * @return  is the list of courses
+     * */
+    private List<Course> getCourses(String query){
+        List<Course> courses = new ArrayList<>();
+        Cursor c = database.getReadableDatabase().rawQuery(query, null);
+        while(c.moveToNext()){
+            courses.add(getCourseFromCursor(c));
+        }
+        return courses;
+    }
+
     @Override
     public List<Course> getAll() {
         return null;

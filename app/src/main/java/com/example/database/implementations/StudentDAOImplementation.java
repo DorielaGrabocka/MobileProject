@@ -23,6 +23,8 @@ public class StudentDAOImplementation implements StudentDAO {
     private DatabaseHelper database;
     private Student theUser;
     private Context context;
+    private String BASIC_QUERY = "SELECT id, name, surname, age, major, minor, password, email" +
+            " FROM student";
 
 
     public StudentDAOImplementation(Context context) {
@@ -96,8 +98,7 @@ public class StudentDAOImplementation implements StudentDAO {
     @Override
     public Student find(Integer key) {
 
-        String query = "SELECT id, name, surname, age, major, minor, password, email" +
-                " FROM student WHERE id=?";
+        String query = BASIC_QUERY + " WHERE id=?";
         Cursor result = database.getReadableDatabase().rawQuery(query, new String[]{key.toString()});
         if(result.moveToFirst() && result.getCount()==1){//student with the above ID is found
             Student student=getStudentFormCursor(result);
@@ -160,5 +161,36 @@ public class StudentDAOImplementation implements StudentDAO {
 
     public void setTheUser(Student theUser) {
         this.theUser = theUser;
+    }
+
+    /**Method to filter students by name.
+     * @param keyword is the keyword to search for
+     * @return  a list of students
+     * */
+    public List<Student> findCourseByName(String keyword) {
+        String query = BASIC_QUERY+" WHERE name LIKE '%"+keyword+"%'";
+        return getStudents(query);
+    }
+
+    /**Method to filter students by surname.
+     * @param keyword is the keyword to search for
+     * @return  a list of students
+     * */
+    public List<Student> findCourseBySurname(String keyword) {
+        String query = BASIC_QUERY+" WHERE surname LIKE '%"+keyword+"%'";
+        return getStudents(query);
+    }
+
+    /**Utility method to get courses from a query.
+     * @param query - is the query that will retreive the information
+     * @return  is the list of students
+     * */
+    private List<Student> getStudents(String query){
+        List<Student> filteredStudents = new ArrayList<>();
+        Cursor c = database.getReadableDatabase().rawQuery(query, null);
+        while(c.moveToNext()){
+            filteredStudents.add(getStudentFormCursor(c));
+        }
+        return filteredStudents;
     }
 }
