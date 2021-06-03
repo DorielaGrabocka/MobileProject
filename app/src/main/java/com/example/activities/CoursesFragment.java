@@ -50,7 +50,7 @@ public class CoursesFragment extends Fragment {
                 listOfCoursesView.setAdapter(adapter);
             }
             else{
-                FutureCoursesRecyclerViewAdapter adapter = new FutureCoursesRecyclerViewAdapter(context);
+                FutureCoursesRecyclerViewAdapter adapter = new FutureCoursesRecyclerViewAdapter(context, theUser);
                 adapter.setCourses(studentDAO.getNextCourses());
                 listOfCoursesView.setAdapter(adapter);
             }

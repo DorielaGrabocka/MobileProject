@@ -46,7 +46,8 @@
                 android:layout_width="200px"
                 android:layout_height="200px"
                 android:layout_margin="1dp"
-                android:src="@drawable/ic_bookmark"
+                android:background="#6E6C6C"
+                android:src="@drawable/ic_book"
                 />
 
             <LinearLayout

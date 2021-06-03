@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.home_nav:
-                selectedFragment = new HomeFragment();
+                selectedFragment = new HomeFragment(getApplicationContext(), theUser);
                 break;
             case R.id.courses_nav:
                 selectedFragment = new CoursesFragment(getApplicationContext(), theUser);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         navigationMenu.setOnNavigationItemSelectedListener(listener);
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new HomeFragment())
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new HomeFragment(getApplicationContext(), theUser))
                 .commit();
         studentDAO.closeConnection();
     }

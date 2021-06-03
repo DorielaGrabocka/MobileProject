@@ -2,6 +2,7 @@ package com.example.database.implementations;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.example.database.daofactory.DAOFactory;
 import com.example.database.daofactory.DatabaseHelper;
@@ -38,6 +39,40 @@ public class StudentCourseDAOImplementation {
         return listOfStudentCourses;
     }
 
+    /**Method to get all Bookmarked courses of a student
+     * @param student is the student whose list will be returned
+     * @return is the list of student to be returned
+     * */
+    public List<StudentCourse> getBookmarkedCoursesOfStudent(Student student){
+        List<StudentCourse> listOfBookmarks = new ArrayList<>();
+        String query = BASIC_QUERY+" WHERE status='2'AND studentid=?";
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(student.getId())});
+        while(c.moveToNext()){
+            listOfBookmarks.add(createStudentCourseFormCursor(c));
+        }
+        db.close();
+        return listOfBookmarks;
+    }
+
+
+    /**Method to bookmark a course
+     *@param c  is the StudentCourse object taken
+     * */
+    public void bookmarkCourse(StudentCourse c){
+        SQLiteDatabase db = database.getWritableDatabase();
+        String query = "INSERT INTO 'studentcourse' ('studentid', 'courseid', 'grade','status') VALUES " +
+                "(?,?,?,?);";
+        String[] arguments =
+                {String.valueOf(c.getStudentId()),
+                        String.valueOf(c.getCourseId()),
+                        c.getGrade(),
+                        String.valueOf(c.getStatus())};
+        db.execSQL(query, arguments);
+        //Log.println(Log.INFO, "Database",String.valueOf(c.moveToFirst()));
+        db.close();
+    }
+
     /**Method to create the StudentCourse from a line in a cursor
      * @param c is the cursor
      * @return is the StudentCourse
@@ -51,6 +86,8 @@ public class StudentCourseDAOImplementation {
         sc.setCourse(coursesDAOImplementation.find(c.getInt(1)));
         return  sc;
     }
+
+
 
     public void close(){
         database.close();

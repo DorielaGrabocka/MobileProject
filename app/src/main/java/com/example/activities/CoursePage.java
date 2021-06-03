@@ -76,7 +76,6 @@ public class CoursePage extends AppCompatActivity {
             }
         }
     };
-
     private View.OnClickListener gradeAnalyticsBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -87,6 +86,7 @@ public class CoursePage extends AppCompatActivity {
     };
 
 
+    /**Method to refresh the listview contents*/
     private void showComments() {
         ArrayAdapter<Comment> commentsAdapter =
                 new CommentsListArrayAdapter(getApplicationContext(),

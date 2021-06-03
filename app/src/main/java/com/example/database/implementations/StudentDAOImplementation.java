@@ -40,7 +40,8 @@ public class StudentDAOImplementation implements StudentDAO {
     public List<Course> getNextCourses() {
         String query = CoursesDAOImplementation.getBASIC_QUERYCourses()
                 +" where id not in " +
-                "(select sc.CourseID from student s join studentcourse sc on s.id=sc.StudentID where s.id=?)\n" +
+                "(select sc.CourseID from student s join studentcourse sc on s.id=sc.StudentID " +
+                "where s.id=? and (status='0' or status='1')) " +
                 "and (Eligibility='All' OR Department=?);";
         List<Course> listOfEligibleCourses = new ArrayList<>();
         Cursor cursor = database.getReadableDatabase()

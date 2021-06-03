@@ -12,6 +12,7 @@ import com.example.database.interfaces.CourseDAO;
 import com.example.models.Comment;
 import com.example.models.Course;
 import com.example.models.Student;
+import com.example.models.StudentCourse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,8 @@ public class CoursesDAOImplementation implements CourseDAO {
         return course;
     }
 
+    /**Method to get the basic query for the course table
+     * @return a string*/
     public static String getBASIC_QUERYCourses() {
         return BASIC_QUERY;
     }
@@ -135,6 +138,9 @@ public class CoursesDAOImplementation implements CourseDAO {
         return listOfComments;
     }
 
+    /**Method to create a Comment object from a cursor that is supplied.
+     * @param c is the cursor
+     * @return a comment object.*/
     private Comment getCommentFromCursor(Cursor c) {
         Comment comment = new Comment();
         comment.setStudentId(c.getInt(0));

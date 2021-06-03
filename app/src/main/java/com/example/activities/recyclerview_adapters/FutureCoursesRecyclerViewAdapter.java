@@ -13,7 +13,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activities.R;
+import com.example.database.implementations.CoursesDAOImplementation;
+import com.example.database.implementations.StudentCourseDAOImplementation;
 import com.example.models.Course;
+import com.example.models.Student;
+import com.example.models.StudentCourse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +27,11 @@ public class FutureCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Futur
 
     private List<Course> courses = new ArrayList<>();
     private Context context;
+    private Student theUser;
 
-    public FutureCoursesRecyclerViewAdapter(Context context) {
+    public FutureCoursesRecyclerViewAdapter(Context context, Student user) {
         this.context = context;
-
+        theUser = user;
     }
 
     public void setCourses(List<Course> courses) {
@@ -49,12 +54,26 @@ public class FutureCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Futur
         holder.instructor_tv.setText("Instructor: "+ courses.get(position).getInstructor());
         holder.credits_tv.setText("Credits: "+ courses.get(position).getCredits());
         holder.time_tv.setText("Time: "+ courses.get(position).getDay()+", "+courses.get(position).getTime());
-
-        //missing image
-        /*Glide.with(context)
-                .asBitmap()
-                .load(books.get(position).getImageUrl())
-                .into(holder.image);*/
+        View.OnClickListener buttonClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, "Bookmark course is clicked", Toast.LENGTH_SHORT).show();
+                //change db
+                StudentCourse sc= new StudentCourse();
+                sc.setStudentId(theUser.getId());
+                sc.setCourseId(courses.get(position).getId());
+                sc.setStatus(2);
+                sc.setGrade("-");
+                StudentCourseDAOImplementation scDAO = new StudentCourseDAOImplementation(context);
+                try{
+                    scDAO.bookmarkCourse(sc);
+                    Toast.makeText(context, "Course Bookmarked! Check Bookmarks in Home Page.", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(context, "An error has occurred! Try again!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        holder.bookmarkCourseButton.setOnClickListener(buttonClickListener);
     }
 
     @Override
@@ -68,13 +87,7 @@ public class FutureCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Futur
         private TextView title_tv, instructor_tv, credits_tv, time_tv;
 
         private Button bookmarkCourseButton;
-        private View.OnClickListener buttonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Bookmark course is clicked", Toast.LENGTH_SHORT).show();
-                //change db
-            }
-        };
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,7 +97,6 @@ public class FutureCoursesRecyclerViewAdapter extends RecyclerView.Adapter<Futur
             time_tv = itemView.findViewById(R.id.time_tv);
             parent = itemView.findViewById(R.id.parent);
             bookmarkCourseButton = itemView.findViewById(R.id.bookmark_btn);
-            bookmarkCourseButton.setOnClickListener(buttonClickListener);
         }
     }
 }

@@ -8,7 +8,7 @@ public class StudentCourse implements Serializable {
 
     //get from database
     private String grade;
-    private int status;//done(1) or currently taking(0) or neither, bookmarked(2)
+    private int status;//done(1) or currently taking(0) or bookmarked(2)
     private int  studentId;
     private int courseId;
 
