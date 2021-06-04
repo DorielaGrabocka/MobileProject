@@ -66,7 +66,7 @@ public class CoursePage extends AppCompatActivity {
                 try{
                     courseDAO.deleteComment(commentToBeDeleted);
                     showComments();
-                    Toast.makeText(CoursePage.this, "Comment added succesfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CoursePage.this, "Comment deleted succesfully!", Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     Toast.makeText(CoursePage.this, "An error occurred!", Toast.LENGTH_SHORT).show();
                 }
